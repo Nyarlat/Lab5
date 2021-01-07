@@ -29,34 +29,46 @@ public:
             return true;
         return false;
     }
+
+    virtual void sound() {
+        printf("Void");
+    }
 };
 
 
-class Goose : public Bird {
+class WhiteGoose : public Bird {
 public:
-    Goose() :Bird() {
-        printf("Goose()\n");
+    WhiteGoose() :Bird() {
+        printf("WhiteGoose()\n");
     }
-    Goose(const Goose* g) {
-        printf("Goose(const Goose* g)\n");
-    }
-
-    Goose(const Goose& g) {
-        printf("Goose(const Goose& g)\n");
+    WhiteGoose(const WhiteGoose* g) {
+        printf("WhiteGoose(const WhiteGoose* g)\n");
     }
 
-    ~Goose() {
-        printf("~Goose()\n");
+    WhiteGoose(const WhiteGoose& g) {
+        printf("WhiteGoose(const WhiteGoose& g)\n");
+    }
+
+    ~WhiteGoose() {
+        printf("~WhiteGoose()\n");
     }
 
     string GetClassName() {
-        return "Goose";
+        return "WhiteGoose";
     }
 
     bool isA(string classname) {
-        if (classname == "Goose")
+        if (classname == "WhiteGoose" || Bird::isA(classname))
             return true;
         return false;
+    }
+
+    void sound() {
+        printf("Honk!\n");
+    }
+
+    void white_skin() {
+        printf("White skin\n");
     }
 };
 
@@ -81,24 +93,57 @@ public:
         return "Toucan";
     }
 
-    bool isA(string classname) {
+    bool isA(string classname || Bird::isA(classname))) {
         if (classname == "Toucan")
             return true;
         return false;
+    }
+
+    void sound() {
+        printf("Groomkk!\n");
+    }
+
+    void long_beak() {
+        printf("Long beak\n");
     }
 };
 
 
 int main()
 {
+    Bird* g1 = new WhiteGoose;
+    g1->sound();
+    delete g1;
+    cout << endl;
 
 
 
-
-
-
-
-
+    Bird* Cage[10];
+    for (int i = 0; i < 10; ++i)
+    {
+        int random = rand() % 2;
+        if (random == 0)
+            Cage[i] = new WhiteGoose;
+        else if (random == 1)
+            Cage[i] = new Toucan;
+    }
+    for (int i = 0; i < 10; ++i)
+    {
+        if (Cage[i]->GetClassName() == "Toucan")
+            ((Toucan*)Cage)[i].long_beak();
+        if (Cage[i]->isA("WhiteGoose"))
+            ((WhiteGoose*)Cage)[i].white_skin();
+    }
+    printf("\n\n");
+    for (int i = 0; i < 10; ++i)
+    {
+        Toucan* t = dynamic_cast<Toucan*>(Cage[i]);
+        if (t != NULL)
+            t->sound();
+        WhiteGoose* g = dynamic_cast<WhiteGoose*>(Cage[i]);
+        if (g != NULL)
+            g->sound();
+    }
 
 
 
